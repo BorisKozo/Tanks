@@ -23,16 +23,11 @@ requirejs.config({
 require([
     "easel",
     "common/game",
-    "js/loader"
-], function (createjs, game, loader) {
-    game.initialize({canvasId:"canvas"});
-    loader.start();
-    //var circle = new createjs.Shape();
-    //circle.graphics.beginFill("red").drawCircle(0, 0, 40);
-    ////Set position of Shape instance.
-    //circle.x = circle.y = 50;
-    ////Add Shape instance to stage display list.
-    //game.stage.addChild(circle);
-    ////Update stage will render next frame
-    //game.stage.update();
+    "common/state_manager",
+    "app/states/battle"
+], function (createjs, game,stateManager, battle) {
+    game.initialize({ canvasId: "canvas" });
+    stateManager.activate(battle);
+    stateManager.start();
+
 });

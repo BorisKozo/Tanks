@@ -25,16 +25,16 @@
             createjs.Ticker.setPaused(true);
         },
         activeState: null,
-        setActiveState: function (state, options) {
-            if (state.setup && _.isFunction(state.setup)) {
-                state.setup(options);
-            }
-
+        activate: function (state, options) {
             if (stateManager.activeState && stateManager.activeState.teardown && _.isFunction(stateManager.activeState.teardown)) {
                 stateManager.activeState.teardown(state);
             }
 
-            stateManager.activeState = state;
+            stateManager.activeState = null;
+            state.setup(options);
+            state.load().done(function () {
+                stateManager.activeState = state;
+            });
         }
     }
 

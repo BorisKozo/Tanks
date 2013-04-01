@@ -1,6 +1,6 @@
 ﻿define(["easel"], function (createjs) {
     var game = {
-        start: function (options) {
+        initialize: function (options) {
             this.stage = new createjs.Stage(options.canvasId);
         },
         stage: null
