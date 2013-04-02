@@ -1,4 +1,4 @@
-﻿define(["jquery", "lodash", "./game"], function ($, _, game) {
+﻿define(["jquery", "lodash", "./game","./input"], function ($, _, game,input) {
     var State = function () {
     }
 
@@ -26,6 +26,7 @@
     State.prototype.teardown = function () {
         game.stage.removeAllChildren();
         game.stage.removeAllEventListeners();
+        input.clearKeyCallbacks();
     }
     return State;
 });
