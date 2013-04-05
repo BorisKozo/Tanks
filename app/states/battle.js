@@ -5,7 +5,8 @@
 
     battle.setup = function (options) {
         battle.sprites = new SpriteList();
-        battle.sprites.add(new Tank(),"tank");
+        battle.player = new Tank();
+        battle.sprites.add(battle.player, "player");
     }
 
     battle.onLoad = function (deferred) {
@@ -14,9 +15,31 @@
 
     battle.update = function (delta) {
         if (input.pressed("right")) {
-            battle.sprites.at("tank").drawing.x += 1;
-
+            battle.player.rotateHullRight(delta);
         }
+
+        if (input.pressed("left")) {
+            battle.player.rotateHullLeft(delta);
+        }
+
+        if (input.pressed("d")) {
+            battle.player.rotateTurretRight(delta);
+        }
+
+        if (input.pressed("a")) {
+            battle.player.rotateTurretLeft(delta);
+        }
+
+        if (input.pressed("up")) {
+            battle.player.moveForward(delta);
+        }
+
+        if (input.pressed("down")) {
+            battle.player.moveBackward(delta);
+        }
+
+        
+
     }
     return battle;
 });
