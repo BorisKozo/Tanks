@@ -1,19 +1,21 @@
-﻿define(["require", "easel", "common/game", "common/state", "common/loader", "common/sprite_list", "common/input", "./../sprites/tank"], function (require, createjs, game, State, loader, SpriteList, input) {
+﻿define(["require", "easel", "common/game", "common/state", "common/loader", "common/sprite_list", "common/input", "./../sprites/tank"],
+    function (require, createjs, game, State, loader, SpriteList, input) {
     var Tank = require("./../sprites/tank");
 
     var battle = new State();
 
-    battle.setup = function (options) {
+    battle.setup = function () {
         battle.sprites = new SpriteList();
         battle.player = new Tank();
         battle.sprites.add(battle.player, "player");
-    }
+    };
 
     battle.onLoad = function (deferred) {
         battle.sprites.load(deferred, game.stage);
-    }
+    };
 
     battle.update = function (delta) {
+        battle.sprites.update(delta);
         if (input.pressed("right")) {
             battle.player.rotateHullRight(delta);
         }
@@ -38,8 +40,8 @@
             battle.player.moveBackward(delta);
         }
 
-        
 
-    }
+
+    };
     return battle;
 });

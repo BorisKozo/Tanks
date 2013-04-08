@@ -9,13 +9,13 @@
     SpriteList.prototype.update = function (delta) {
 
         for (var i = 0, length = this.length; i < length; i += 1) {
-            this.data[this.keys[i]].update(data);
+            this.data[this.keys[i]].update(delta);
         }
     };
 
     SpriteList.prototype.add = function (item, id) {
         id = id || "$$" + this.counter;
-        this.counter++;
+        this.counter += 1;
 
         this.data[id] = item;
         this.keys.push(id);
@@ -33,13 +33,13 @@
         }
 
         return result;
-    }
+    };
 
     SpriteList.prototype.initialize = function (stage, assets) {
         for (var i = 0, length = this.length; i < length; i += 1) {
             this.data[this.keys[i]].initialize(assets);
         }
-    }
+    };
 
     SpriteList.prototype.load = function (deferred, stage) {
         var _this = this;
@@ -52,7 +52,7 @@
             }
             deferred.resolve();
         });
-    }
+    };
 
 
     return SpriteList;
