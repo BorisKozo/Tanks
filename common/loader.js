@@ -1,4 +1,4 @@
-﻿define(['require','easel', './state_manager'], function (require, createjs) {
+﻿define(['require', 'easel', 'lodash', './state_manager'], function (require, createjs, _) {
 
     var stateManager = require('./state_manager');
     var loadQueue = new createjs.LoadQueue(true);
@@ -7,6 +7,12 @@
     var loader = {
         loadManifest: function (manifest, callback) {
             var loadListener, waitListener;
+            _.forEach(manifest, function (item) {
+                if (item.src) {
+                    item.src = require.toUrl(item.src);
+                }
+            });
+
             if (loadQueue.loaded) {
                 loadListener = loadQueue.addEventListener("complete", function () {
                     var i = 0, length = manifest.length, result = {};
