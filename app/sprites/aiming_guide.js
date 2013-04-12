@@ -1,4 +1,4 @@
-﻿define(["easel", "common/math"], function (createjs, math) {
+﻿define(["createjs", "common/math"], function (createjs, math) {
     var AimingGuide = function (options) {
         this.options = options;
     };

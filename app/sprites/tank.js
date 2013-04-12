@@ -1,4 +1,4 @@
-﻿define(["require", "easel", "./turret"], function (require, createjs) {
+﻿define(["require", "createjs", "./turret"], function (require, createjs) {
 
     var Turret = require("./turret");
 

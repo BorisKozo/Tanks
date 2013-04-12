@@ -5,23 +5,19 @@ requirejs.config({
     baseUrl: '/',
     waitSeconds: 3000,
     shim: {
-        'preload':{
-        },
-        'easel': {
-            exports: 'createjs',
-            deps:['preload']
+        'createjs': {
+            exports: 'createjs'
         }
     },
     paths: {
         'jquery': 'lib/jquery',
-        'easel': 'lib/easeljs-0.6.0.min',
-        'preload': 'lib/preloadjs-0.3.0.min',
+        'createjs': 'lib/createjs.min',
         'lodash': 'lib/lodash'
     }
 });
 
 require([
-    "easel",
+    "createjs",
     "common/game",
     "common/state_manager",
     "app/states/battle"

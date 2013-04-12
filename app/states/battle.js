@@ -1,4 +1,4 @@
-﻿define(["require", "easel", "common/game", "common/state", "common/loader", "common/sprite_list", "common/input", "./../sprites/tank"],
+﻿define(["require", "createjs", "common/game", "common/state", "common/loader", "common/sprite_list", "common/input", "./../sprites/tank"],
     function (require, createjs, game, State, loader, SpriteList, input) {
     var Tank = require("./../sprites/tank");
 
