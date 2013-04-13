@@ -3,7 +3,7 @@
     var rd = Math.PI / 180;
     var dr = 180 / Math.PI;
 
-    function rnd_snd() {
+    function randomSeed() {
         return (Math.random() * 2 - 1) + (Math.random() * 2 - 1) + (Math.random() * 2 - 1);
     }
 
@@ -36,7 +36,7 @@
                 y = Math.random() * 2 - 1;
                 rds = x * x + y * y;
             }
-            while (rds == 0 || rds > 1)
+            while (rds === 0 || rds > 1);
 
             // This magic is the Box-Muller Transform
             c = Math.sqrt(-2 * Math.log(rds) / rds);
@@ -46,7 +46,7 @@
             return [x * c, y * c];
         },
         randomNormal: function (mean, stdev) {
-            return Math.round(rnd_snd() * stdev + mean);
+            return Math.round(randomSeed() * stdev + mean);
         },
         randomNormalInRange: function (stdev, min, max) {
             var result = math.randomNormal((max + min) / 2, stdev);

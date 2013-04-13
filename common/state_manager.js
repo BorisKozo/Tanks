@@ -1,5 +1,5 @@
-﻿define(["createjs","lodash","./game"], function (createjs,_,game) {
-    
+﻿define(["createjs", "lodash", "./game"], function (createjs, _, game) {
+
     function _handleTick(event) {
         if (event.paused) {
             return;
@@ -36,7 +36,7 @@
                 stateManager.activeState = state;
             });
         }
-    }
+    };
 
     return stateManager;
 });

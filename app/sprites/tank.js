@@ -69,7 +69,12 @@
     };
 
     Tank.prototype.fire = function () {
-        this.turret.fire();
+        return this.turret.fire({
+            angle: this.drawing.rotation,
+            x: this.drawing.x,
+            y: this.drawing.y,
+            speed: 20
+        });
     };
 
     return Tank;

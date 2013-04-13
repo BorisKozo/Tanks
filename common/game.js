@@ -4,7 +4,7 @@
             this.stage = new createjs.Stage(options.canvasId);
         },
         stage: null
-    }
+    };
 
     return game;
 });

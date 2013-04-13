@@ -8,6 +8,7 @@
         battle.sprites = new SpriteList();
         battle.player = new Tank();
         battle.sprites.add(battle.player, "player");
+        battle.shells = new SpriteList();
     };
 
     battle.onLoad = function (deferred) {
@@ -16,6 +17,8 @@
 
     battle.update = function (delta) {
         battle.sprites.update(delta);
+        battle.shells.update(delta);
+
         if (input.pressed("right")) {
             battle.player.rotateHullRight(delta);
         }
@@ -41,7 +44,11 @@
         }
 
         if (input.pressed("f")) {
-            battle.player.fire();
+            var shell = battle.player.fire();
+            if (shell) {
+                battle.shells.add(shell);
+                game.stage.addChild(shell.drawing);
+            }
         }
 
 

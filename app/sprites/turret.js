@@ -24,7 +24,7 @@
     Turret.prototype.initialize = function (assets) {
         this.turret = new createjs.Bitmap(assets["tank_turret"]);
         this.fireSound = createjs.Sound.createInstance("fire_sound_1");
-        
+
         this.aimingGuide.initialize();
 
         this.drawing = new createjs.Container();
@@ -45,13 +45,13 @@
     };
 
     Turret.prototype.rotateTurretRight = function () {
-        this.drawing.rotation = (this.drawing.rotation + 1) % 360;
-       
+        this.drawing.rotation = math.incMod(this.drawing.rotation, 1, 360);
+
         this.aimingGuide.rotateTurret();
     };
 
     Turret.prototype.rotateTurretLeft = function () {
-        this.drawing.rotation = (this.drawing.rotation - 1) % 360;
+        this.drawing.rotation = math.incMod(this.drawing.rotation, -1, 360);
         this.aimingGuide.rotateTurret();
     };
 
@@ -59,20 +59,21 @@
         this.aimingGuide.rotateHull();
     };
 
-    Turret.prototype.fire = function () {
+    Turret.prototype.fire = function (options) {
         if (this.fireCounter > 0) {
             return;
         }
         this.fireCounter = this.options.fireRate;
         this.fireSound.play();
-        var shell = new Shell({
-            angle: this.drawing.rotation,
-            x:100,
-            y:100
-        });
+        options.angle = math.incMod(options.angle, this.drawing.rotation, 360);
+        var barrelEnd = this.aimingGuide.drawing.localToGlobal(0,0);
+        options.x = barrelEnd.x;
+        options.y = barrelEnd.y;
+        var shell = new Shell(options);
+        shell.initialize();
 
         return shell;
-    }
+    };
 
     return Turret;
 });

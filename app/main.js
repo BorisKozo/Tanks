@@ -1,4 +1,5 @@
-﻿/*global requirejs*/
+﻿/*global requirejs require*/
+
 'use strict';
 
 requirejs.config({
@@ -21,7 +22,7 @@ require([
     "common/game",
     "common/state_manager",
     "app/states/battle"
-], function (createjs, game,stateManager, battle) {
+], function (createjs, game, stateManager, battle) {
     game.initialize({ canvasId: "canvas" });
     stateManager.activate(battle);
     stateManager.start();

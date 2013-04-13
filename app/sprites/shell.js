@@ -1,6 +1,8 @@
 ﻿define(["createjs", "common/math"], function (createjs, math) {
     var Shell = function (options) {
         this.options = options;
+        this.speedX = Math.sin(math.degToRad(options.angle));
+        this.speedY = -Math.cos(math.degToRad(options.angle));
     };
 
     Shell.prototype.getManifest = function () {
@@ -16,8 +18,10 @@
 
     Shell.prototype.update = function () {
         var graphics = this.drawing.graphics.c().ss(1).s("red");
-        graphics.dc(0, 0, 2).es();
-        this.drawing.x += 0.5;
+        graphics.dc(0, 0, 1).es();
+        this.drawing.x += this.speedX;
+        this.drawing.y += this.speedY;
+        
 
     };
 
