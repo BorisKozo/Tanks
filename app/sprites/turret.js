@@ -1,6 +1,7 @@
-﻿define(["require", "createjs", "./aiming_guide"], function (require, createjs) {
+﻿define(["require", "createjs", "common/math", "./aiming_guide", "./shell"], function (require, createjs, math) {
 
     var AimingGuide = require("./aiming_guide");
+    var Shell = require("./shell");
 
     var Turret = function (options) {
         this.options = options;
@@ -35,15 +36,17 @@
         this.aimingGuide.drawing.x = 8;
         this.aimingGuide.drawing.y = -1;
 
+        this.fireCounter = this.options.fireRate;
     };
 
     Turret.prototype.update = function () {
         this.aimingGuide.update();
+        this.fireCounter = math.incMin(this.fireCounter, -0.1, 0);
     };
 
     Turret.prototype.rotateTurretRight = function () {
         this.drawing.rotation = (this.drawing.rotation + 1) % 360;
-        this.fireSound.play();
+       
         this.aimingGuide.rotateTurret();
     };
 
@@ -55,6 +58,21 @@
     Turret.prototype.rotateHull = function () {
         this.aimingGuide.rotateHull();
     };
+
+    Turret.prototype.fire = function () {
+        if (this.fireCounter > 0) {
+            return;
+        }
+        this.fireCounter = this.options.fireRate;
+        this.fireSound.play();
+        var shell = new Shell({
+            angle: this.drawing.rotation,
+            x:100,
+            y:100
+        });
+
+        return shell;
+    }
 
     return Turret;
 });

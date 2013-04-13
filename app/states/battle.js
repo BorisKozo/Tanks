@@ -40,6 +40,10 @@
             battle.player.moveBackward(delta);
         }
 
+        if (input.pressed("f")) {
+            battle.player.fire();
+        }
+
 
 
     };

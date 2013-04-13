@@ -4,7 +4,9 @@
 
     var Tank = function (options) {
         this.options = options;
-        this.turret = new Turret();
+        this.turret = new Turret({
+            fireRate: 5
+        });
 
     };
 
@@ -17,8 +19,8 @@
 
     Tank.prototype.initialize = function (assets) {
         this.hull = new createjs.Bitmap(assets["tank_hull"]);
-
         this.turret.initialize(assets);
+
         this.drawing = new createjs.Container();
         this.drawing.addChild(this.hull, this.turret.drawing);
 
@@ -64,6 +66,10 @@
         var angle = Math.PI * this.drawing.rotation / 180;
         this.drawing.x -= Math.sin(angle);
         this.drawing.y += Math.cos(angle);
+    };
+
+    Tank.prototype.fire = function () {
+        this.turret.fire();
     };
 
     return Tank;
