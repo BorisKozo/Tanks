@@ -1,57 +1,51 @@
-﻿define(["require", "createjs", "common/math", "./aiming_guide", "./shell"], function (require, createjs, math) {
+﻿define(["require", "createjs", "common/math", "./aiming_guide"], function (require, createjs, math) {
 
     var AimingGuide = require("./aiming_guide");
-    var Shell = require("./shell");
+
 
     var Turret = function (options) {
-        this.options = options;
-        this.aimingGuide = new AimingGuide({
-            minAngle: 5,
-            maxAngle: 30,
-            aimSpeed: 0.2,
-            hullRotationPenalty: 0.4,
-            turretRotationPenalty: 0.8
-        });
+        this.options = options.turret;
+        this.aimingGuide = new AimingGuide(options);
     };
 
     Turret.prototype.getManifest = function () {
         var result = [];
-        result.push({ id: "tank_turret", src: "assets/images/tank_turret_1.png" });
-        result.push({ id: "fire_sound_1", src: "assets/sounds/tank_firing_1.ogg" });
+        result.push(this.options.graphics);
+        result = result.concat(this.aimingGuide.getManifest());
         return result;
     };
 
     Turret.prototype.initialize = function (assets) {
-        this.turret = new createjs.Bitmap(assets["tank_turret"]);
-        this.fireSound = createjs.Sound.createInstance("fire_sound_1");
+        this.turret = new createjs.Bitmap(assets[this.options.graphics.id]);
+
 
         this.aimingGuide.initialize();
 
         this.drawing = new createjs.Container();
         this.drawing.addChild(this.turret, this.aimingGuide.drawing);
 
-        this.drawing.regX = 7;
-        this.drawing.regY = 20;
+        this.drawing.regX = this.options.centerX;
+        this.drawing.regY = this.options.centerY;
 
-        this.aimingGuide.drawing.x = 8;
-        this.aimingGuide.drawing.y = -1;
+        this.aimingGuide.drawing.x = this.options.barrelEndX;
+        this.aimingGuide.drawing.y = this.options.barrelEndY - 1;
 
         this.fireCounter = this.options.fireRate;
     };
 
     Turret.prototype.update = function () {
         this.aimingGuide.update();
-        this.fireCounter = math.incMin(this.fireCounter, -0.1, 0);
+        
     };
 
     Turret.prototype.rotateTurretRight = function () {
-        this.drawing.rotation = math.incMod(this.drawing.rotation, 1, 360);
+        this.drawing.rotation = math.incMod(this.drawing.rotation, this.options.rotationSpeed, 360);
 
         this.aimingGuide.rotateTurret();
     };
 
     Turret.prototype.rotateTurretLeft = function () {
-        this.drawing.rotation = math.incMod(this.drawing.rotation, -1, 360);
+        this.drawing.rotation = math.incMod(this.drawing.rotation, -this.options.rotationSpeed, 360);
         this.aimingGuide.rotateTurret();
     };
 
@@ -60,19 +54,13 @@
     };
 
     Turret.prototype.fire = function (options) {
-        if (this.fireCounter > 0) {
-            return;
-        }
-        this.fireCounter = this.options.fireRate;
-        this.fireSound.play();
         options.angle = math.incMod(options.angle, this.drawing.rotation, 360);
-        var barrelEnd = this.aimingGuide.drawing.localToGlobal(0,0);
+       
+        var barrelEnd = this.drawing.localToGlobal(this.options.barrelEndX, this.options.barrelEndY - 1);
         options.x = barrelEnd.x;
         options.y = barrelEnd.y;
-        var shell = new Shell(options);
-        shell.initialize();
 
-        return shell;
+        return this.aimingGuide.fire(options);
     };
 
     return Turret;

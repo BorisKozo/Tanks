@@ -1,15 +1,23 @@
-﻿define(["createjs", "common/math"], function (createjs, math) {
+﻿define(["require", "createjs", "common/math", "./shell"], function (require, createjs, math) {
+
+    var Shell = require("./shell");
+
     var AimingGuide = function (options) {
-        this.options = options;
+        this.options = options.gun;
     };
 
     AimingGuide.prototype.getManifest = function () {
-        return [];
+        var result = [];
+        result.push(this.options.fireSound);
+        return result;
     };
 
     AimingGuide.prototype.initialize = function () {
         this.drawing = new createjs.Shape();
         this.currentAngle = this.options.maxAngle;
+        this.fireSound = createjs.Sound.createInstance(this.options.fireSound.id);
+
+        this.fireCounter = this.options.fireRate;
     };
 
     AimingGuide.prototype.update = function () {
@@ -23,6 +31,8 @@
         if (this.currentAngle <= this.options.minAngle) {
             this.currentAngle = this.options.minAngle;
         }
+
+        this.fireCounter = math.incMin(this.fireCounter, -0.1, 0);
     };
 
     AimingGuide.prototype.rotateTurret = function () {
@@ -38,6 +48,24 @@
         if (this.currentAngle > this.options.maxAngle) {
             this.currentAngle = this.options.maxAngle;
         }
+    };
+
+    AimingGuide.prototype.fire = function (options) {
+
+        if (this.fireCounter > 0) {
+            return;
+        }
+
+        options.angle = math.randomNormal(options.angle, this.currentAngle * 0.3);
+        this.fireCounter = this.options.fireRate;
+        this.fireSound.play();
+
+        var shell = new Shell(options);
+        shell.initialize();
+
+        this.currentAngle = math.incMax(this.currentAngle, this.options.dispersionOnFire, this.options.maxAngle);
+        return shell;
+
     };
 
 
