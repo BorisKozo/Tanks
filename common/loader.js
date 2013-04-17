@@ -1,7 +1,8 @@
-﻿define(['require', 'easel', 'lodash', './state_manager'], function (require, createjs, _) {
+﻿define(['require', 'createjs', 'lodash', './state_manager'], function (require, createjs, _) {
 
-    var stateManager = require('./state_manager');
+    // var stateManager = require('./state_manager');
     var loadQueue = new createjs.LoadQueue(true);
+    loadQueue.installPlugin(createjs.Sound);
     loadQueue.loaded = true;
 
     var loader = {
@@ -34,4 +35,4 @@
     };
 
     return loader;
-})
+});
