@@ -6,16 +6,10 @@
         this.options = options.gun;
     };
 
-    AimingGuide.prototype.getManifest = function () {
-        var result = [];
-        result.push(this.options.fireSound);
-        return result;
-    };
-
     AimingGuide.prototype.initialize = function () {
         this.drawing = new createjs.Shape();
         this.currentAngle = this.options.maxAngle;
-        this.fireSound = createjs.Sound.createInstance(this.options.fireSound.id);
+        this.fireSound = createjs.Sound.createInstance(this.options.sounds.fireSound.id);
 
         this.fireCounter = this.options.fireRate;
     };
@@ -57,9 +51,11 @@
         }
 
         options.angle = math.randomNormal(options.angle, this.currentAngle * 0.3);
+        options.speed = this.options.muzzleVelocity;
+
         this.fireCounter = this.options.fireRate;
         this.fireSound.play();
-
+        
         var shell = new Shell(options);
         shell.initialize();
 

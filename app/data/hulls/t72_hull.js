@@ -5,6 +5,8 @@
         centerX: 9,
         centerY: 15,
         rotationSpeed: 1,
-        graphics: { id: "t72_hull", src: "assets/images/tank_hull_1.png" }
+        graphics: {
+            hull: { id: "t72_hull", src: "assets/images/tank_hull_1.png" }
+        }
     };
 });

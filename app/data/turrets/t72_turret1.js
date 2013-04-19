@@ -5,6 +5,9 @@
         barrelEndX: 8,
         barrelEndY: 0,
         rotationSpeed: 1,
-        graphics: { id: "t72_turret1", src: "assets/images/tank_turret_1.png" }
+        graphics: {
+            turret: { id: "t72_turret1", src: "assets/images/tank_turret_1.png" }
+        }
+    
     };
 });

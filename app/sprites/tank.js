@@ -8,15 +8,8 @@
 
     };
 
-    Tank.prototype.getManifest = function () {
-        var result = [];
-        result.push(this.options.graphics);
-        result = result.concat(this.turret.getManifest());
-        return result;
-    };
-
     Tank.prototype.initialize = function (assets) {
-        this.hull = new createjs.Bitmap(assets[this.options.graphics.id]);
+        this.hull = new createjs.Bitmap(assets[this.options.graphics.hull.id]);
         this.turret.initialize(assets);
 
         this.drawing = new createjs.Container();

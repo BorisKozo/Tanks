@@ -1,4 +1,4 @@
-﻿define(["createjs", "lodash", "./game"], function (createjs, _, game) {
+﻿define(["createjs", "lodash", "./game", "./input"], function (createjs, _, game, input) {
 
     function _handleTick(event) {
         if (event.paused) {
@@ -30,6 +30,10 @@
                 stateManager.activeState.teardown(state);
             }
 
+            input.resetPressedKeys();
+            input.resetPreventDefaultKeys();
+            input.clearKeyCallbacks();
+            
             stateManager.activeState = null;
             state.setup(options);
             state.load().done(function () {

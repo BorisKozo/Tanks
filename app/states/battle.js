@@ -11,10 +11,16 @@
             battle.player = new Tank(t72);
             battle.sprites.add(battle.player, "player");
             battle.shells = new SpriteList();
+            input.preventDefaultKeys(["right", "left", "up", "down"]);
         };
 
         battle.onLoad = function (deferred) {
-            battle.sprites.load(deferred, game.stage);
+            var manifest;
+            manifest = State.mergeManifest([], t72.hull, t72.turret, t72.gun);
+            loader.loadManifest(manifest, function (assets) {
+                battle.sprites.initialize(assets);
+                deferred.resolve();
+            });
         };
 
         battle.update = function (delta) {
