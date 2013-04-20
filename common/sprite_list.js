@@ -32,6 +32,15 @@
         return this.data[id];
     };
 
+    SpriteList.prototype.each = function(callback){
+        var _this = this;
+        _.forEach(this.keys, function(currentId){
+            if(_.isFunction(callback)){
+                callback(_this.at(currentId));
+            }
+        })
+    };
+
     SpriteList.prototype.initialize = function (assets) {
         _.forOwn(this.data, function (sprite) {
             sprite.initialize(assets);

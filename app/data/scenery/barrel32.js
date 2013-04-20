@@ -5,6 +5,7 @@ define(["./../effects/explosion"], function (explosion) {
         radius: 16,
         centerX: 15,
         centerY: 15,
+        timeTillNextExplode: 5000,
         graphics: { id: "barrel", src: "assets/images/barrel.png" },
         explosion: explosion
     };

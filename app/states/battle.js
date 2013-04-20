@@ -1,6 +1,6 @@
-﻿define(["require", "createjs", "common/game", "common/state", "common/loader", "common/sprite_list", "common/input",
+﻿define(["require", "createjs", "common/game", "common/state", "common/loader", "common/sprite_list", "common/input", "common/collision_manager",
         "./../sprites/tank", "./../data/tanks/t72_tank","./../data/scenery/barrel32", "./../sprites/barrel"],
-    function (require, createjs, game, State, loader, SpriteList, input) {
+    function (require, createjs, game, State, loader, SpriteList, input, collisionManager) {
         var Tank = require("./../sprites/tank");
         var t72 = require("./../data/tanks/t72_tank");
         var barrelData = require("./../data/scenery/barrel32");
@@ -72,6 +72,8 @@
                 }
             }
 
+            //check collisions for now just test all the shells
+            collisionManager.checkCollisions([battle.barrel], battle.shells);
 
         };
         return battle;
