@@ -20,7 +20,7 @@
 
         battle.onLoad = function (deferred) {
             var manifest;
-            manifest = State.mergeManifest([], t72.hull, t72.turret, t72.gun);
+            manifest = State.mergeManifest([], t72.hull, t72.turret, t72.gun, barrelData);
             loader.loadManifest(manifest, function (assets) {
                 battle.sprites.initialize(assets);
                 deferred.resolve();

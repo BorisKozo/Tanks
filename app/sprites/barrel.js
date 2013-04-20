@@ -14,7 +14,7 @@ define(["require", "createjs", "common/math"], function (require, createjs, math
     };
 
     Barrel.prototype.initialize = function (assets) {
-        this.barrelImage = new createjs.Bitmap(assets[this.options.graphics.id]);
+        this.barrelImage = new createjs.Bitmap(assets[this.options.graphics.barrel.id]);
         this.drawing = new createjs.Container();
         this.drawing.addChild(this.barrelImage);
 
@@ -40,6 +40,9 @@ define(["require", "createjs", "common/math"], function (require, createjs, math
 
     Barrel.prototype.collide = function (gameEntity) {
         if (!this.exploding) {
+            this.isDead = true;
+            gameEntity.isDead = true;
+
             return [this.explode()];
         }
         return [];
@@ -51,12 +54,7 @@ define(["require", "createjs", "common/math"], function (require, createjs, math
         var _this = this;
         this.animation.addEventListener("animationend", function () {
             _this.animation.stop();
-
-            //Set a delay for the state change so we will not have another collision for now.
-            //TODO: Should be refactored to remove the barrel from the stage and the shell too.
-            setTimeout(function(){
-                _this.exploding = false;
-            }, _this.options.timeTillNextExplode);
+            //TODO: need to remove the animation from the stage.
         });
         return this.animation;
     };

@@ -6,7 +6,9 @@ define(["./../effects/explosion"], function (explosion) {
         centerX: 15,
         centerY: 15,
         timeTillNextExplode: 5000,
-        graphics: { id: "barrel", src: "assets/images/barrel.png" },
+        graphics: {
+            barrel: {id: "barrel", src: "assets/images/barrel.png" }
+        },
         explosion: explosion
     };
 });
