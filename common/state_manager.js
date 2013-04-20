@@ -8,6 +8,7 @@
         if (!stateManager.activeState) {
             return;
         }
+        $("#fps").html(createjs.Ticker.getMeasuredFPS());
         var delta = (event.delta / 1000) * requiredFps;
         stateManager.activeState.update(delta);
         stateManager.activeState.draw(game.stage);

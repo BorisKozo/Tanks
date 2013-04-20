@@ -1,41 +1,44 @@
-﻿define(["require", "createjs", "common/math", "./turret"], function (require, createjs, math) {
+﻿define(["require", "createjs", "common/math", "./hull", "./turret"], function (require, createjs, math) {
 
+    var Hull = require("./hull");
     var Turret = require("./turret");
 
     var Tank = function (options) {
-        this.options = options.hull;
+        this.options = options;
         this.turret = new Turret(options);
+        this.hull = new Hull(options);
 
     };
 
     Tank.prototype.initialize = function (assets) {
-        this.hull = new createjs.Bitmap(assets[this.options.graphics.hull.id]);
-        this.turret.initialize(assets);
-
         this.drawing = new createjs.Container();
-        this.drawing.addChild(this.hull, this.turret.drawing);
+        this.tank = new createjs.Container();
 
-        this.drawing.regX = this.options.centerX;
-        this.drawing.regY = this.options.centerY;
+        this.turret.initialize(assets);
+        this.hull.initialize(assets);
 
-        this.turret.drawing.x = this.options.turretAxisX;
-        this.turret.drawing.y = this.options.turretAxisY;
+        this.tank.addChild(this.hull.drawing, this.turret.drawing);
+        this.drawing.addChild(this.tank);
 
-        this.drawing.x = 200;
-        this.drawing.y = 200;
+        this.tank.regX = this.options.hull.centerX;
+        this.tank.regY = this.options.hull.centerY;
+
+        this.turret.drawing.x = this.options.hull.turretAxisX;
+        this.turret.drawing.y = this.options.hull.turretAxisY;
     };
 
     Tank.prototype.update = function (delta) {
+        this.hull.update(delta);
         this.turret.update(delta);
     };
 
     Tank.prototype.rotateHullRight = function () {
-        this.drawing.rotation = math.incMod(this.drawing.rotation, this.options.rotationSpeed, 360);
+        this.tank.rotation = math.incMod(this.tank.rotation, this.options.hull.rotationSpeed, 360);
         this.turret.rotateHull();
     };
 
     Tank.prototype.rotateHullLeft = function () {
-        this.drawing.rotation = math.incMod(this.drawing.rotation, -this.options.rotationSpeed, 360);
+        this.tank.rotation = math.incMod(this.tank.rotation, -this.options.hull.rotationSpeed, 360);
         this.turret.rotateHull();
     };
 
@@ -48,22 +51,22 @@
     };
 
     Tank.prototype.moveForward = function () {
-        var angle = math.degToRad(this.drawing.rotation);
-        this.drawing.x += Math.sin(angle);
-        this.drawing.y -= Math.cos(angle);
+        var angle = math.degToRad(this.tank.rotation);
+        this.tank.x += Math.sin(angle);
+        this.tank.y -= Math.cos(angle);
     };
 
     Tank.prototype.moveBackward = function () {
-        var angle = math.degToRad(this.drawing.rotation);
-        this.drawing.x -= Math.sin(angle);
-        this.drawing.y += Math.cos(angle);
+        var angle = math.degToRad(this.tank.rotation);
+        this.tank.x -= Math.sin(angle);
+        this.tank.y += Math.cos(angle);
     };
 
     Tank.prototype.fire = function () {
         return this.turret.fire({
-            angle: this.drawing.rotation,
-            x: this.drawing.x,
-            y: this.drawing.y,
+            angle: this.tank.rotation,
+            x: this.tank.x,
+            y: this.tank.y,
             speed: 20
         });
     };

@@ -19,6 +19,8 @@
             manifest = State.mergeManifest([], t72.hull, t72.turret, t72.gun);
             loader.loadManifest(manifest, function (assets) {
                 battle.sprites.initialize(assets);
+                battle.player.drawing.x = 200;
+                battle.player.drawing.y = 200;
                 deferred.resolve();
             });
         };
