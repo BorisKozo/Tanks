@@ -1,15 +1,19 @@
-﻿define(["require", "createjs", "common/game", "common/state", "common/loader", "common/sprite_list", "common/input", "./../sprites/tank", "./../data/tanks/t72_tank"],
+﻿define(["require", "createjs", "common/game", "common/state", "common/loader", "common/sprite_list", "common/input",
+        "./../sprites/tank", "./../data/tanks/t72_tank","./../data/scenery/barrel32", "./../sprites/barrel"],
     function (require, createjs, game, State, loader, SpriteList, input) {
         var Tank = require("./../sprites/tank");
         var t72 = require("./../data/tanks/t72_tank");
-
+        var barrelData = require("./../data/scenery/barrel32");
+        var Barrel = require("./../sprites/barrel");
 
         var battle = new State();
 
         battle.setup = function () {
             battle.sprites = new SpriteList();
             battle.player = new Tank(t72);
+            battle.barrel = new Barrel(barrelData);
             battle.sprites.add(battle.player, "player");
+            battle.sprites.add(battle.barrel, "barrel");
             battle.shells = new SpriteList();
             input.preventDefaultKeys(["right", "left", "up", "down"]);
         };
@@ -26,6 +30,7 @@
         battle.update = function (delta) {
             battle.sprites.update(delta);
             battle.shells.update(delta);
+            battle.barrel.update(delta);
 
             if (input.pressed("right")) {
                 battle.player.rotateHullRight(delta);
@@ -59,6 +64,13 @@
                 }
             }
 
+            if (input.pressed("e")) {
+                var animation = battle.barrel.explode();
+                if (animation) {
+//                    battle.shells.add(shell);
+                    game.stage.addChild(animation);
+                }
+            }
 
 
         };
