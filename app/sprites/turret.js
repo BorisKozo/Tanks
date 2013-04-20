@@ -26,8 +26,8 @@
         this.fireCounter = this.options.fireRate;
     };
 
-    Turret.prototype.update = function () {
-        this.aimingGuide.update();
+    Turret.prototype.update = function (delta) {
+        this.aimingGuide.update(delta);
         
     };
 

@@ -15,8 +15,8 @@
     Shell.prototype.update = function (delta) {
         var graphics = this.drawing.graphics.c().ss(1).s("red");
         graphics.dc(0, 0, 1).es();
-        this.drawing.x += this.speedX;
-        this.drawing.y += this.speedY;
+        this.drawing.x += delta * this.speedX;
+        this.drawing.y += delta * this.speedY;
 
         if (!game.bbox.contains(this.drawing.x, this.drawing.y)) {
             this.isDead = true;

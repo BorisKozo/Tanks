@@ -14,14 +14,14 @@
         this.fireCounter = this.options.fireRate;
     };
 
-    AimingGuide.prototype.update = function () {
+    AimingGuide.prototype.update = function (delta) {
         var graphics = this.drawing.graphics.c().ss(1).s("red");
         var y = 500;
         var x = y * Math.tan(math.degToRad(this.currentAngle));
 
         graphics.mt(0, 0).lt(-x, -y).mt(0, 0).lt(x, -y).es();
 
-        this.currentAngle -= this.options.aimSpeed;
+        this.currentAngle -= delta*this.options.aimSpeed;
         if (this.currentAngle <= this.options.minAngle) {
             this.currentAngle = this.options.minAngle;
         }

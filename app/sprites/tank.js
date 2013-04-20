@@ -25,8 +25,8 @@
         this.drawing.y = 200;
     };
 
-    Tank.prototype.update = function () {
-        this.turret.update();
+    Tank.prototype.update = function (delta) {
+        this.turret.update(delta);
     };
 
     Tank.prototype.rotateHullRight = function () {
