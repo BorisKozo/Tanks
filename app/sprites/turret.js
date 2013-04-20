@@ -8,15 +8,8 @@
         this.aimingGuide = new AimingGuide(options);
     };
 
-    Turret.prototype.getManifest = function () {
-        var result = [];
-        result.push(this.options.graphics);
-        result = result.concat(this.aimingGuide.getManifest());
-        return result;
-    };
-
     Turret.prototype.initialize = function (assets) {
-        this.turret = new createjs.Bitmap(assets[this.options.graphics.id]);
+        this.turret = new createjs.Bitmap(assets[this.options.graphics.turret.id]);
 
 
         this.aimingGuide.initialize();
@@ -33,8 +26,8 @@
         this.fireCounter = this.options.fireRate;
     };
 
-    Turret.prototype.update = function () {
-        this.aimingGuide.update();
+    Turret.prototype.update = function (delta) {
+        this.aimingGuide.update(delta);
         
     };
 
