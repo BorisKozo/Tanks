@@ -3,8 +3,6 @@ define(["require", "createjs", "common/math"], function (require, createjs, math
     var Barrel = function (options) {
         this.options = options;
         this.exploding = false;
-        var spriteSheet = new createjs.SpriteSheet(this.options.explosion);
-        this.animation = new createjs.BitmapAnimation(spriteSheet);
     };
 
     Barrel.prototype.getManifest = function () {
@@ -17,6 +15,10 @@ define(["require", "createjs", "common/math"], function (require, createjs, math
         this.barrelImage = new createjs.Bitmap(assets[this.options.graphics.barrel.id]);
         this.drawing = new createjs.Container();
         this.drawing.addChild(this.barrelImage);
+
+        this.options.explosion.images = [assets[this.options.explosion.graphics.fireExplosion.id]];
+        var spriteSheet = new createjs.SpriteSheet(this.options.explosion);
+        this.animation = new createjs.BitmapAnimation(spriteSheet);
 
         this.drawing.x = this.options.initialPositionX - this.options.centerX;
         this.drawing.y = this.options.initialPositionY - this.options.centerY;

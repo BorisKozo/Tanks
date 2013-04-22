@@ -1,17 +1,20 @@
 ﻿define(["require", "createjs", "common/game", "common/state", "common/loader", "common/sprite_list", "common/input", "common/collision_manager",
-        "./../sprites/tank", "./../data/tanks/t72_tank","./../data/scenery/barrel32", "./../sprites/barrel"],
+    "./../sprites/tank", "./../data/tanks/t72_tank", "./../data/scenery/barrel32", "./../sprites/barrel", "./../data/effects/explosion"],
     function (require, createjs, game, State, loader, SpriteList, input, collisionManager) {
-        var Tank = require("./../sprites/tank");
         var t72 = require("./../data/tanks/t72_tank");
-        var barrelData = require("./../data/scenery/barrel32");
+        var barrel32 = require("./../data/scenery/barrel32");
+        var fireExplosion = require("./../data/effects/explosion");
+
+        var Tank = require("./../sprites/tank");
         var Barrel = require("./../sprites/barrel");
+
 
         var battle = new State();
 
         battle.setup = function () {
             battle.sprites = new SpriteList();
             battle.player = new Tank(t72);
-            battle.barrel = new Barrel(barrelData);
+            battle.barrel = new Barrel(barrel32);
             battle.sprites.add(battle.player, "player");
             battle.sprites.add(battle.barrel, "barrel");
             battle.shells = new SpriteList();
@@ -20,7 +23,7 @@
 
         battle.onLoad = function (deferred) {
             var manifest;
-            manifest = State.mergeManifest([], t72.hull, t72.turret, t72.gun, barrelData);
+            manifest = State.mergeManifest([], t72.hull, t72.turret, t72.gun, barrel32, fireExplosion);
             loader.loadManifest(manifest, function (assets) {
                 battle.sprites.initialize(assets);
                 deferred.resolve();
