@@ -5,19 +5,16 @@ define(["require", "createjs", "common/math"], function (require, createjs, math
         this.exploding = false;
     };
 
-    Barrel.prototype.getManifest = function () {
-        var result = [];
-        result.push(this.options.graphics);
-        return result;
-    };
-
     Barrel.prototype.initialize = function (assets) {
         this.barrelImage = new createjs.Bitmap(assets[this.options.graphics.barrel.id]);
         this.drawing = new createjs.Container();
         this.drawing.addChild(this.barrelImage);
 
-        this.options.explosion.images = [assets[this.options.explosion.graphics.fireExplosion.id]];
-        var spriteSheet = new createjs.SpriteSheet(this.options.explosion);
+        var data = {};
+        data.images = [assets[this.options.explosion.graphics.fireExplosion.id]];
+        data.animations = this.options.explosion.animations;
+        data.frames = this.options.explosion.frames;
+        var spriteSheet = new createjs.SpriteSheet(data);
         this.animation = new createjs.BitmapAnimation(spriteSheet);
 
         this.drawing.x = this.options.initialPositionX - this.options.centerX;
@@ -25,6 +22,9 @@ define(["require", "createjs", "common/math"], function (require, createjs, math
 
         this.animation.x = this.options.initialPositionX - this.options.explosion.frames.width / 2;
         this.animation.y = this.options.initialPositionY - this.options.explosion.frames.height / 2;
+        this.animation.vX = 5;
+
+        this.explosionSound = createjs.Sound.createInstance(this.options.explosion.sounds.explosion.id);
     };
 
     Barrel.prototype.update = function (delta) {
@@ -51,7 +51,8 @@ define(["require", "createjs", "common/math"], function (require, createjs, math
     };
 
     Barrel.prototype.explode = function () {
-        this.animation.play("explode");
+        this.animation.gotoAndPlay("explode");
+        this.explosionSound.play();
         this.exploding = true;
         var _this = this;
         this.animation.addEventListener("animationend", function () {
