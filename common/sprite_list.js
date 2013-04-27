@@ -24,8 +24,11 @@
         id = id || "$$" + this.counter;
         this.counter += 1;
 
+        if (this.data[id] === undefined) {
+            this.length += 1;
+        }
         this.data[id] = item;
-        this.length += 1;
+        
     };
 
     SpriteList.prototype.at = function (id) {
@@ -33,7 +36,6 @@
     };
 
     SpriteList.prototype.each = function (callback) {
-        var _this = this;
         _.forOwn(this.data, function (sprite) {
             callback(sprite);
         });
