@@ -1,6 +1,7 @@
 ﻿define(["createjs", "common/math", "common/game"], function (createjs, math, game) {
     var Shell = function (options) {
         this.options = options;
+        this.options.radius = 1; // TODO: this magic number should be removed.
         this.speedX = options.speed * Math.sin(math.degToRad(options.angle));
         this.speedY = options.speed * -Math.cos(math.degToRad(options.angle));
     };
@@ -22,7 +23,6 @@
             this.isDead = true;
         }
     };
-
 
     return Shell;
 });
