@@ -90,5 +90,10 @@
             
 
         };
+
+        battle.addEffect = function (sprite) {
+            this.sprites.add(sprite);
+            game.stage.addChild(sprite.drawing);
+        }
         return battle;
     });

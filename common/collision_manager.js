@@ -38,27 +38,27 @@
             return;
         }
 
-        if (sprite1.beforeCollide) {
-            sprite1Data = sprite1.beforeCollide(sprite2);
+        if (sprite1.beforeCollision) {
+            sprite1Data = sprite1.beforeCollision(sprite2);
         }
-        if (sprite2.beforeCollide) {
-            sprite2Data = sprite2.beforeCollide(sprite1);
-        }
-
-
-        if (sprite1.collide) {
-            sprite1.collide(sprite2, sprite1Data);
-        }
-        if (sprite2.collide) {
-            sprite2.collide(sprite1, sprite2Data);
+        if (sprite2.beforeCollision) {
+            sprite2Data = sprite2.beforeCollision(sprite1);
         }
 
 
-        if (sprite1.afterCollide) {
-            sprite1.afterCollide(sprite2, sprite1Data);
+        if (sprite1.collision) {
+            sprite1.collision(sprite2, sprite1Data);
         }
-        if (sprite2.afterCollide) {
-            sprite2.afterCollide(sprite1, sprite2Data);
+        if (sprite2.collision) {
+            sprite2.collision(sprite1, sprite2Data);
+        }
+
+
+        if (sprite1.afterCollision) {
+            sprite1.afterCollision(sprite2, sprite1Data);
+        }
+        if (sprite2.afterCollision) {
+            sprite2.afterCollision(sprite1, sprite2Data);
         }
 
     };

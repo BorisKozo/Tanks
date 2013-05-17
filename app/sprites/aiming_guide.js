@@ -21,7 +21,7 @@
 
         graphics.mt(0, 0).lt(-x, -y).mt(0, 0).lt(x, -y).es();
 
-        this.currentAngle -= delta*this.options.aimSpeed;
+        this.currentAngle -= delta * this.options.aimSpeed;
         if (this.currentAngle <= this.options.minAngle) {
             this.currentAngle = this.options.minAngle;
         }
@@ -55,7 +55,7 @@
 
         this.fireCounter = this.options.fireRate;
         this.fireSound.play();
-        
+
         var shell = new Shell(options);
         shell.initialize();
 

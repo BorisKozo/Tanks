@@ -1,8 +1,10 @@
-define([], function (explosion) {
+define([], function () {
     return {
         frames: {
             width: 128,
-            height: 128
+            height: 128,
+            regX: 64,
+            regY: 64
         },
         animations: {
             explode: [0, 31]

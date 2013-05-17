@@ -14,11 +14,11 @@
         graphics.c().ss(1).s("Azure").r(0, 0, 26, 4).es(); //The frame
 
         graphics.ss(2);
-        if (this.hp > 0.75){
+        if (this.hp > 0.75) {
             graphics.s("green");
         }
         else {
-            if (this.hp>0.25){
+            if (this.hp > 0.25) {
                 graphics.s("yellow");
             } else {
                 graphics.s("red");

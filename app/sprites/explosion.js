@@ -9,7 +9,7 @@
         data.animations = this.options.animations;
         data.frames = this.options.frames;
         var spriteSheet = new createjs.SpriteSheet(data);
-        this.animation = new createjs.BitmapAnimation(spriteSheet);
+        this.drawing = new createjs.BitmapAnimation(spriteSheet);
 
         //this.drawing.x = this.options.centerX;
         //this.drawing.y = this.options.centerY;
@@ -30,7 +30,7 @@
         this.explosionSound.play();
         this.exploding = true;
         var _this = this;
-        this.animation.addEventListener("animationend", function () {
+        this.drawing.addEventListener("animationend", function () {
             _this.drawing.stop();
             _this.isDead = true;
         });

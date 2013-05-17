@@ -33,6 +33,10 @@
         this.y = location.y;
     };
 
+    Shell.prototype.afterCollision = function () {
+        this.isDead = true;
+    };
+
 
     Shell.prototype.type = "shell";
 

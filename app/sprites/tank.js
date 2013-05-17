@@ -1,4 +1,4 @@
-﻿define(["require", "createjs", "common/math", "./hull", "./turret","./hp_bar"], function (require, createjs, math) {
+﻿define(["require", "createjs", "common/math", "./hull", "./turret", "./hp_bar"], function (require, createjs, math) {
 
     var Hull = require("./hull");
     var Turret = require("./turret");
@@ -30,7 +30,7 @@
         this.turret.drawing.y = this.options.hull.turretAxisY;
 
         this.hpBar.drawing.x = -this.options.hull.centerX;
-        this.hpBar.drawing.y = -this.options.hull.centerY-10;
+        this.hpBar.drawing.y = -this.options.hull.centerY - 10;
 
     };
 

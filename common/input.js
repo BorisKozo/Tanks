@@ -98,9 +98,9 @@ define(["lodash"], function (_) {
     /** @private
      * Reset input-hash. Called when game is blurred so a key-controlled player doesn't keep on moving when the game isn't focused.
      */
-    input.resetPressedKeys = function() {
+    input.resetPressedKeys = function () {
         pressed_keys = {};
-    }
+    };
 
     /** @private
      * handle event "onkeydown" by remembering what key was pressed

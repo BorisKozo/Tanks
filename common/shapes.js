@@ -31,7 +31,7 @@
             return false;
         }
 
-    }
+    };
 
     Rect.fromBounds = function (left, top, right, bottom) {
         return new Rect({
