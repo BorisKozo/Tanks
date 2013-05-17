@@ -1,7 +1,5 @@
 define(["./../effects/explosion"], function (explosion) {
     return {
-        initialPositionX:100,
-        initialPositionY:100,
         radius: 16,
         centerX: 15,
         centerY: 15,

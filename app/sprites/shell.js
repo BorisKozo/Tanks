@@ -11,6 +11,7 @@
         this.angle = this.options.angle;
         this.drawing.x = this.options.x;
         this.drawing.y = this.options.y;
+        this.updatePosition();
     };
 
     Shell.prototype.update = function (delta) {
@@ -22,7 +23,18 @@
         if (!game.bbox.contains(this.drawing.x, this.drawing.y)) {
             this.isDead = true;
         }
+
+        this.updatePosition();
     };
+
+    Shell.prototype.updatePosition = function () {
+        var location = this.drawing.localToGlobal(0, 0);
+        this.x = location.x;
+        this.y = location.y;
+    };
+
+
+    Shell.prototype.type = "shell";
 
     return Shell;
 });
