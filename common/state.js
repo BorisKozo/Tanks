@@ -1,7 +1,8 @@
-﻿define(["jquery", "lodash", "./game", "./input"], function ($, _, game, input) {
+﻿define(["jquery", "lodash", "./game", "./input", "./events"], function ($, _, game, input, Events) {
     var State = function () {
     };
 
+    State.prototype = _.extend(State.prototype, Events);
     //setup -> load
 
     //This is where you create all your internal data/sprites/whatever
@@ -31,6 +32,7 @@
         game.stage.removeAllChildren();
         game.stage.removeAllEventListeners();
         input.clearKeyCallbacks();
+        this.off(null, null, this);
     };
 
     State.mergeManifest = function (manifest) {
