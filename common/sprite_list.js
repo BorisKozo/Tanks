@@ -1,59 +1,52 @@
-﻿define(["lodash", "./loader"], function (_, loader) {
+﻿define(["lodash", "common/game"], function (_, game) {
     var SpriteList = function () {
         this.length = 0;
         this.data = {};
         this.counter = 0;
-        this.keys = [];
     };
 
     SpriteList.prototype.update = function (delta) {
+        var _this = this;
+        _.forOwn(this.data, function (sprite, key) {
+            if (!sprite.isDead) {
+                sprite.update(delta);
+            }
 
-        for (var i = 0, length = this.length; i < length; i += 1) {
-            this.data[this.keys[i]].update(delta);
-        }
+            if (sprite.isDead) {
+                game.stage.removeChild(sprite.drawing);
+                delete _this.data[key];
+                _this.length -= 1;
+            }
+        });
     };
 
     SpriteList.prototype.add = function (item, id) {
         id = id || "$$" + this.counter;
         this.counter += 1;
 
+        if (this.data[id] === undefined) {
+            this.length += 1;
+        }
         this.data[id] = item;
-        this.keys.push(id);
-        this.length += 1;
+        
     };
 
     SpriteList.prototype.at = function (id) {
         return this.data[id];
     };
 
-    SpriteList.prototype.getManifest = function () {
-        var result = [];
-        for (var i = 0, length = this.length; i < length; i += 1) {
-            result = result.concat(this.data[this.keys[i]].getManifest());
-        }
-
-        return result;
-    };
-
-    SpriteList.prototype.initialize = function (stage, assets) {
-        for (var i = 0, length = this.length; i < length; i += 1) {
-            this.data[this.keys[i]].initialize(assets);
-        }
-    };
-
-    SpriteList.prototype.load = function (deferred, stage) {
-        var _this = this;
-        loader.loadManifest(_this.getManifest(), function (assets) {
-            _this.initialize(stage, assets);
-            for (var i = 0, length = _this.length; i < length; i += 1) {
-                if (_this.data[_this.keys[i]].drawing) {
-                    stage.addChild(_this.data[_this.keys[i]].drawing);
-                }
-            }
-            deferred.resolve();
+    SpriteList.prototype.each = function (callback) {
+        _.forOwn(this.data, function (sprite) {
+            callback(sprite);
         });
     };
 
+    SpriteList.prototype.initialize = function (assets) {
+        _.forOwn(this.data, function (sprite) {
+            sprite.initialize(assets);
+            game.stage.addChild(sprite.drawing);
+        });
+    };
 
     return SpriteList;
 

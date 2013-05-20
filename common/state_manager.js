@@ -1,4 +1,5 @@
-﻿define(["createjs", "lodash", "./game"], function (createjs, _, game) {
+﻿define(["createjs", "lodash", "./game", "./input"], function (createjs, _, game, input) {
+    var requiredFps = 30;
 
     function _handleTick(event) {
         if (event.paused) {
@@ -7,8 +8,9 @@
         if (!stateManager.activeState) {
             return;
         }
-
-        stateManager.activeState.update(event.delta);
+        $("#fps").html(createjs.Ticker.getMeasuredFPS());
+        var delta = 1; //(event.delta / 1000) * requiredFps;
+        stateManager.activeState.update(delta);
         stateManager.activeState.draw(game.stage);
     }
 
@@ -16,7 +18,7 @@
     createjs.Ticker.addEventListener("tick", _handleTick);
     createjs.Ticker.setPaused(true);
     createjs.Ticker.useRAF = true;
-    createjs.Ticker.setFPS(30);
+    createjs.Ticker.setFPS(requiredFps);
     var stateManager = {
         start: function () {
             createjs.Ticker.setPaused(false);
@@ -30,6 +32,10 @@
                 stateManager.activeState.teardown(state);
             }
 
+            input.resetPressedKeys();
+            input.resetPreventDefaultKeys();
+            input.clearKeyCallbacks();
+            
             stateManager.activeState = null;
             state.setup(options);
             state.load().done(function () {

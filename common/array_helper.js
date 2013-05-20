@@ -10,5 +10,5 @@
         remove: function (array, from, to) {
             _remove.call(array, from, to);
         }
-    }
+    };
 });
